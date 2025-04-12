@@ -1,53 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Medicine Management System</title>
+  <title>Medicine Inventory</title>
   <style>
     body {
-      font-family: Arial;
-      margin: 20px;
-    }
-    h1 {
-      color: #2a6592;
+      font-family: Arial, sans-serif;
+      margin: 30px;
     }
     table {
+      width: 70%;
       border-collapse: collapse;
-      width: 80%;
     }
     th, td {
-      border: 1px solid #aaa;
       padding: 10px;
+      border: 1px solid #ccc;
       text-align: left;
     }
     th {
-      background-color: #f2f2f2;
- }
+      background-color: #e6eef5;
+    }
+    input {
+      margin: 5px;
+      padding: 5px;
+    }
+    #addBtn {
+      padding: 6px 12px;
+      margin-top: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
   <h1>Medicine Inventory</h1>
 
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Expiry Date</th>
-    </tr>
-    <tr>
-<td>Paracetamol</td>
-      <td>100</td>
-      <td>2.5</td>
-      <td>2026-10-30</td>
-    </tr>
-    <tr>
-      <td>Ibuprofen</td>
-      <td>50</td>
-      <td>3.0</td>
-      <td>2025-08-12</td>
-    </tr>
+  <label>Medicine Name: <input type="text" id="name" /></label><br>
+  <label>Quantity: <input type="number" id="quantity" /></label><br>
+  <label>Price: <input type="number" step="0.1" id="price" /></label><br>
+  <label>Expiry Date: <input type="date" id="expiry" /></label><br>
+  <button id="addBtn">Add Medicine</button>
+
+  <br><br>
+
+  <table id="medicineTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Expiry Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Paracetamol</td>
+        <td>100</td>
+        <td>2.5</td>
+        <td>2026-10-30</td>
+      </tr>
+      <tr>
+        <td>Ibuprofen</td>
+        <td>50</td>
+        <td>3.0</td>
+        <td>2025-08-12</td>
+      </tr>
+    </tbody>
   </table>
+
+  <script>
+    document.getElementById("addBtn").onclick = function () {
+      const name = document.getElementById("name").value;
+      const quantity = document.getElementById("quantity").value;
+      const price = document.getElementById("price").value;
+      const expiry = document.getElementById("expiry").value;
+
+      if (name && quantity && price && expiry) {
+        const table = document.getElementById("medicineTable").getElementsByTagName('tbody')[0];
+        const newRow = table.insertRow();
+        newRow.innerHTML = `
+          <td>${name}</td>
+          <td>${quantity}</td>
+          <td>${price}</td>
+          <td>${expiry}</td>
+        `;
+
+        // Clear inputs
+        document.getElementById("name").value = '';
+        document.getElementById("quantity").value = '';
+        document.getElementById("price").value = '';
+        document.getElementById("expiry").value = '';
+      } else {
+        alert("Please fill out all fields!");
+      }
+    };
+  </script>
 
 </body>
 </html>
