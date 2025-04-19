@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f4f8;
+      background: linear-gradient(120deg, #d0e7f9, #f8fcff);
       color: #333;
       padding: 40px;
       text-align: center;
@@ -75,6 +75,17 @@
       font-size: 14px;
       color: #555;
     }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    input::placeholder {
+      color: #888;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -82,86 +93,95 @@
   <h1>💊 Medicine Inventory System</h1>
 
   <div>
-    <label>Medicine Name: <input type="text" id="name" /></label><br>
-    <label>Quantity: <input type="number" id="quantity" /></label><br>
-    <label>Price (₹): <input type="number" step="0.01" id="price" /></label><br>
-    <label>Expiry Date: <input type="date" id="expiry" /></label><br>
-    <button onclick="addMedicine()">Add Medicine</button>
-    <button id="downloadBtn" onclick="downloadInventory()">Download Inventory</button>
+    <label for="name"><b>Medicine Name:</b>
+      <input type="text" id="name" placeholder="e.g., Paracetamol 💊" />
+    </label>
+
+    <label for="quantity"><b>Quantity:</b>
+      <input type="number" id="quantity" placeholder="e.g., 10" />
+    </label>
+
+    <label for="price"><b>Price (₹):</b>
+      <input type="number" step="0.01" id="price" placeholder="e.g., 25.50" />
+    </label>
+
+    <label for="expiry"><b>Expiry Date:</b>
+      <input type="date" id="expiry" />
+    </label>
+
+    <button onclick="addMedicine()">➕ Add Medicine</button>
+    <button id="downloadBtn" onclick="downloadInventory()">⬇️ Download Inventory</button>
   </div>
 
-  <table id="medicineTable">
+  <table id="inventoryTable">
     <thead>
       <tr>
-        <th>Name</th>
+        <th>Medicine Name</th>
         <th>Quantity</th>
-        <th>Price</th>
+        <th>Price (₹)</th>
         <th>Expiry Date</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      <!-- Medicine data will appear here -->
     </tbody>
   </table>
 
   <footer>
-    Owner & Manufacturer: <strong>RowdyStar</strong><br>
-    All rights reserved © 2025
+    © 2025 Medicine Inventory System. All rights reserved. Designed & Manufactured by <b>RowdyStar</b> 🩺
   </footer>
 
   <script>
     function addMedicine() {
-      const name = document.getElementById("name").value.trim();
+      const name = document.getElementById("name").value;
       const quantity = document.getElementById("quantity").value;
       const price = document.getElementById("price").value;
       const expiry = document.getElementById("expiry").value;
 
-      if (name && quantity && price && expiry) {
-        const table = document.getElementById("medicineTable").getElementsByTagName('tbody')[0];
-        const newRow = table.insertRow();
-        newRow.innerHTML = `
-          <td>${name}</td>
-          <td>${quantity}</td>
-          <td>₹${parseFloat(price).toFixed(2)}</td>
-          <td>${expiry}</td>
-        `;
-
-        document.getElementById("name").value = '';
-        document.getElementById("quantity").value = '';
-        document.getElementById("price").value = '';
-        document.getElementById("expiry").value = '';
-      } else {
-        alert("Please fill all fields.");
-      }
-    }
-
-    function downloadInventory() {
-      let data = "Medicine Inventory\n\n";
-      const rows = document.querySelectorAll("#medicineTable tbody tr");
-
-      if (rows.length === 0) {
-        alert("No medicines to download!");
+      if (!name || !quantity || !price || !expiry) {
+        alert("Please fill in all fields");
         return;
       }
 
+      const table = document.getElementById("inventoryTable").getElementsByTagName('tbody')[0];
+      const newRow = table.insertRow();
+      newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${quantity}</td>
+        <td>₹${price}</td>
+        <td>${expiry}</td>
+        <td><button onclick="deleteRow(this)">🗑️ Delete</button></td>
+      `;
+
+      document.getElementById("name").value = "";
+      document.getElementById("quantity").value = "";
+      document.getElementById("price").value = "";
+      document.getElementById("expiry").value = "";
+    }
+
+    function deleteRow(button) {
+      const row = button.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+    }
+
+    function downloadInventory() {
+      const table = document.getElementById("inventoryTable");
+      const rows = table.querySelectorAll("tr");
+      let csvContent = "Medicine Name,Quantity,Price (₹),Expiry Date\n";
+
       rows.forEach((row, index) => {
+        if (index === 0) return; // skip header
         const cols = row.querySelectorAll("td");
-        data += `#${index + 1}\n`;
-        data += `Name: ${cols[0].textContent}\n`;
-        data += `Quantity: ${cols[1].textContent}\n`;
-        data += `Price: ${cols[2].textContent}\n`;
-        data += `Expiry: ${cols[3].textContent}\n\n`;
+        const rowData = Array.from(cols).slice(0, 4).map(col => col.textContent).join(",");
+        csvContent += rowData + "\n";
       });
 
-      const blob = new Blob([data], { type: "text/plain" });
+      const blob = new Blob([csvContent], { type: "text/csv" });
       const url = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "MedicineInventory.txt";
-      link.click();
-
-      URL.revokeObjectURL(url);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "medicine_inventory.csv";
+      a.click();
     }
   </script>
 
