@@ -6,14 +6,22 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #f0f4ff, #e8f8ff);
-      color: #333;
+      background: url('https://images.unsplash.com/photo-1580281657527-47ff6d6c0b3e?auto=format&fit=crop&w=1650&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
       padding: 40px;
       text-align: center;
+      backdrop-filter: blur(4px);
     }
+
     h1 {
-      color: #2a3f54;
+      color: #f8f9fa;
+      background-color: rgba(0,0,0,0.5);
+      padding: 10px;
+      border-radius: 12px;
+      display: inline-block;
     }
+
     input, button {
       margin: 8px;
       padding: 10px;
@@ -21,6 +29,12 @@
       border-radius: 6px;
       border: 1px solid #ccc;
     }
+
+    input {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #000;
+    }
+
     button {
       cursor: pointer;
       background-color: #007BFF;
@@ -28,27 +42,46 @@
       border: none;
       transition: background 0.3s ease;
     }
+
     button:hover {
       background-color: #0056b3;
     }
+
     table {
       margin: 30px auto;
       border-collapse: collapse;
       width: 90%;
+      background-color: rgba(255, 255, 255, 0.95);
+      color: #000;
+      border-radius: 12px;
+      overflow: hidden;
     }
+
     th, td {
       border: 1px solid #aaa;
       padding: 12px;
       text-align: center;
     }
+
     th {
       background-color: #cce5ff;
     }
+
     #downloadBtn {
       background-color: #28a745;
     }
+
     #downloadBtn:hover {
       background-color: #218838;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 8px;
+      display: inline-block;
     }
   </style>
 </head>
@@ -75,9 +108,14 @@
       </tr>
     </thead>
     <tbody>
-      <!-- New rows will appear here -->
+      <!-- Dynamic content will be inserted here -->
     </tbody>
   </table>
+
+  <footer>
+    🏢 Owner & Manufacturer: <strong>RowdyStar 💼</strong><br>
+    🌐 All rights reserved © 2025
+  </footer>
 
   <script>
     function addMedicine() {
@@ -96,7 +134,7 @@
           <td>${expiry}</td>
         `;
 
-        // Clear input fields
+        // Clear fields
         document.getElementById("name").value = '';
         document.getElementById("quantity").value = '';
         document.getElementById("price").value = '';
