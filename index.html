@@ -6,24 +6,19 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('https://images.unsplash.com/photo-1580281657527-47ff6d6c0b3e?auto=format&fit=crop&w=1650&q=80') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
+      background-color: #f0f4f8;
+      color: #333;
       padding: 40px;
       text-align: center;
-      backdrop-filter: blur(4px);
     }
 
     h1 {
-      color: #f8f9fa;
-      background-color: rgba(0,0,0,0.5);
-      padding: 10px;
-      border-radius: 12px;
-      display: inline-block;
+      color: #2a4365;
+      margin-bottom: 30px;
     }
 
     input, button {
-      margin: 8px;
+      margin: 10px;
       padding: 10px;
       font-size: 16px;
       border-radius: 6px;
@@ -31,57 +26,54 @@
     }
 
     input {
-      background-color: rgba(255, 255, 255, 0.9);
-      color: #000;
+      background-color: #fff;
     }
 
     button {
       cursor: pointer;
-      background-color: #007BFF;
+      background-color: #3182ce;
       color: white;
       border: none;
       transition: background 0.3s ease;
     }
 
     button:hover {
-      background-color: #0056b3;
+      background-color: #2b6cb0;
     }
 
     table {
       margin: 30px auto;
       border-collapse: collapse;
       width: 90%;
-      background-color: rgba(255, 255, 255, 0.95);
-      color: #000;
-      border-radius: 12px;
+      background-color: #ffffff;
+      border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     th, td {
-      border: 1px solid #aaa;
+      border: 1px solid #ccc;
       padding: 12px;
       text-align: center;
     }
 
     th {
-      background-color: #cce5ff;
+      background-color: #e2e8f0;
+      color: #2d3748;
     }
 
     #downloadBtn {
-      background-color: #28a745;
+      background-color: #38a169;
     }
 
     #downloadBtn:hover {
-      background-color: #218838;
+      background-color: #2f855a;
     }
 
     footer {
       margin-top: 40px;
       font-size: 14px;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 10px;
-      border-radius: 8px;
-      display: inline-block;
+      color: #555;
     }
   </style>
 </head>
@@ -90,31 +82,31 @@
   <h1>💊 Medicine Inventory System</h1>
 
   <div>
-    <label>📛 Medicine Name: <input type="text" id="name" placeholder="e.g. Paracetamol" /></label><br>
-    <label>🔢 Quantity: <input type="number" id="quantity" placeholder="e.g. 100" /></label><br>
-    <label>💰 Price (₹): <input type="number" step="0.01" id="price" placeholder="e.g. 5.50" /></label><br>
-    <label>📅 Expiry Date: <input type="date" id="expiry" /></label><br>
-    <button onclick="addMedicine()">➕ Add Medicine</button>
-    <button id="downloadBtn" onclick="downloadInventory()">📥 Download Inventory</button>
+    <label>Medicine Name: <input type="text" id="name" /></label><br>
+    <label>Quantity: <input type="number" id="quantity" /></label><br>
+    <label>Price (₹): <input type="number" step="0.01" id="price" /></label><br>
+    <label>Expiry Date: <input type="date" id="expiry" /></label><br>
+    <button onclick="addMedicine()">Add Medicine</button>
+    <button id="downloadBtn" onclick="downloadInventory()">Download Inventory</button>
   </div>
 
   <table id="medicineTable">
     <thead>
       <tr>
-        <th>📛 Name</th>
-        <th>🔢 Quantity</th>
-        <th>💰 Price</th>
-        <th>📅 Expiry Date</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Expiry Date</th>
       </tr>
     </thead>
     <tbody>
-      <!-- Dynamic content will be inserted here -->
+      <!-- Medicine data will appear here -->
     </tbody>
   </table>
 
   <footer>
-    🏢 Owner & Manufacturer: <strong>RowdyStar 💼</strong><br>
-    🌐 All rights reserved © 2025
+    Owner & Manufacturer: <strong>RowdyStar</strong><br>
+    All rights reserved © 2025
   </footer>
 
   <script>
@@ -134,32 +126,31 @@
           <td>${expiry}</td>
         `;
 
-        // Clear fields
         document.getElementById("name").value = '';
         document.getElementById("quantity").value = '';
         document.getElementById("price").value = '';
         document.getElementById("expiry").value = '';
       } else {
-        alert("⚠️ Please fill out all the fields!");
+        alert("Please fill all fields.");
       }
     }
 
     function downloadInventory() {
-      let data = "📋 Medicine Inventory\n\n";
+      let data = "Medicine Inventory\n\n";
       const rows = document.querySelectorAll("#medicineTable tbody tr");
 
       if (rows.length === 0) {
-        alert("📭 No medicines to download!");
+        alert("No medicines to download!");
         return;
       }
 
       rows.forEach((row, index) => {
         const cols = row.querySelectorAll("td");
-        data += `#${index + 1}️⃣\n`;
-        data += `📛 Name: ${cols[0].textContent}\n`;
-        data += `🔢 Quantity: ${cols[1].textContent}\n`;
-        data += `💰 Price: ${cols[2].textContent}\n`;
-        data += `📅 Expiry: ${cols[3].textContent}\n\n`;
+        data += `#${index + 1}\n`;
+        data += `Name: ${cols[0].textContent}\n`;
+        data += `Quantity: ${cols[1].textContent}\n`;
+        data += `Price: ${cols[2].textContent}\n`;
+        data += `Expiry: ${cols[3].textContent}\n\n`;
       });
 
       const blob = new Blob([data], { type: "text/plain" });
