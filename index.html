@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(120deg, #d0e7f9, #f8fcff);
+      background: linear-gradient(120deg, #f5f7fa, #c3dfe7);
       color: #333;
       padding: 40px;
       text-align: center;
@@ -84,7 +84,7 @@
 
     input::placeholder {
       color: #888;
-      font-style: italic;
+      font-style: normal;
     }
   </style>
 </head>
@@ -131,6 +131,68 @@
     © 2025 Medicine Inventory System. All rights reserved. Designed & Manufactured by <b>RowdyStar</b> 🩺
   </footer>
 
+<!-- Add this below your <footer> tag -->
+<div id="successPopup">✅ Medicine added successfully!</div>
+
+<style>
+  #successPopup {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #38a169;
+    color: white;
+    padding: 15px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 1000;
+  }
+
+  #successPopup.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  function addMedicine() {
+    const name = document.getElementById("name").value;
+    const quantity = document.getElementById("quantity").value;
+    const price = document.getElementById("price").value;
+    const expiry = document.getElementById("expiry").value;
+
+    if (!name || !quantity || !price || !expiry) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    const table = document.getElementById("inventoryTable").getElementsByTagName('tbody')[0];
+    const newRow = table.insertRow();
+    newRow.innerHTML = `
+      <td>${name}</td>
+      <td>${quantity}</td>
+      <td>₹${price}</td>
+      <td>${expiry}</td>
+      <td><button onclick="deleteRow(this)">🗑️ Delete</button></td>
+    `;
+
+    document.getElementById("name").value = "";
+    document.getElementById("quantity").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("expiry").value = "";
+
+    // Show success popup
+    const popup = document.getElementById("successPopup");
+    popup.classList.add("show");
+    setTimeout(() => popup.classList.remove("show"), 2500);
+  }
+</script>
+
+  
   <script>
     function addMedicine() {
       const name = document.getElementById("name").value;
