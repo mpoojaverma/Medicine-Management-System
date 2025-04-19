@@ -1,123 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Medicine Inventory Portal</title>
+  <meta charset="UTF-8">
+  <title>💊 Medicine Inventory System</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .container {
-      background-color: #ffffffcc;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      width: 500px;
-    }
-
-    h1 {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f0f4ff, #e8f8ff);
+      color: #333;
+      padding: 40px;
       text-align: center;
-      color: #003366;
-      margin-bottom: 25px;
     }
-
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: bold;
+    h1 {
+      color: #2a3f54;
     }
-
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      margin-bottom: 15px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    #addBtn {
-      width: 100%;
+    input, button {
+      margin: 8px;
       padding: 10px;
-      background-color: #007bff;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      cursor: pointer;
+      background-color: #007BFF;
       color: white;
       border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
+      transition: background 0.3s ease;
     }
-
-    #addBtn:hover {
+    button:hover {
       background-color: #0056b3;
     }
-
     table {
-      margin-top: 25px;
-      width: 100%;
+      margin: 30px auto;
       border-collapse: collapse;
+      width: 90%;
     }
-
     th, td {
-      padding: 10px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
+      border: 1px solid #aaa;
+      padding: 12px;
+      text-align: center;
     }
-
     th {
-      background-color: #f2f2f2;
-      color: #333;
+      background-color: #cce5ff;
+    }
+    #downloadBtn {
+      background-color: #28a745;
+    }
+    #downloadBtn:hover {
+      background-color: #218838;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Medicine Inventory</h1>
+  <h1>💊 Medicine Inventory System</h1>
 
-    <label>Medicine Name:
-      <input type="text" id="name" placeholder="Enter medicine name">
-    </label>
-
-    <label>Quantity:
-      <input type="number" id="quantity" placeholder="Enter quantity">
-    </label>
-
-    <label>Price (₹):
-      <input type="number" step="0.01" id="price" placeholder="Enter price per unit">
-    </label>
-
-    <label>Expiry Date:
-      <input type="date" id="expiry">
-    </label>
-
-    <button id="addBtn">Add Medicine</button>
-
-    <table id="medicineTable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Quantity</th>
-          <th>Price (₹)</th>
-          <th>Expiry Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- New rows will be added here -->
-      </tbody>
-    </table>
+  <div>
+    <label>📛 Medicine Name: <input type="text" id="name" placeholder="e.g. Paracetamol" /></label><br>
+    <label>🔢 Quantity: <input type="number" id="quantity" placeholder="e.g. 100" /></label><br>
+    <label>💰 Price (₹): <input type="number" step="0.01" id="price" placeholder="e.g. 5.50" /></label><br>
+    <label>📅 Expiry Date: <input type="date" id="expiry" /></label><br>
+    <button onclick="addMedicine()">➕ Add Medicine</button>
+    <button id="downloadBtn" onclick="downloadInventory()">📥 Download Inventory</button>
   </div>
 
+  <table id="medicineTable">
+    <thead>
+      <tr>
+        <th>📛 Name</th>
+        <th>🔢 Quantity</th>
+        <th>💰 Price</th>
+        <th>📅 Expiry Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- New rows will appear here -->
+    </tbody>
+  </table>
+
   <script>
-    document.getElementById("addBtn").onclick = function () {
-      const name = document.getElementById("name").value;
+    function addMedicine() {
+      const name = document.getElementById("name").value.trim();
       const quantity = document.getElementById("quantity").value;
       const price = document.getElementById("price").value;
       const expiry = document.getElementById("expiry").value;
@@ -132,15 +96,44 @@
           <td>${expiry}</td>
         `;
 
-        // Clear inputs
+        // Clear input fields
         document.getElementById("name").value = '';
         document.getElementById("quantity").value = '';
         document.getElementById("price").value = '';
         document.getElementById("expiry").value = '';
       } else {
-        alert("Please fill out all fields!");
+        alert("⚠️ Please fill out all the fields!");
       }
-    };
+    }
+
+    function downloadInventory() {
+      let data = "📋 Medicine Inventory\n\n";
+      const rows = document.querySelectorAll("#medicineTable tbody tr");
+
+      if (rows.length === 0) {
+        alert("📭 No medicines to download!");
+        return;
+      }
+
+      rows.forEach((row, index) => {
+        const cols = row.querySelectorAll("td");
+        data += `#${index + 1}️⃣\n`;
+        data += `📛 Name: ${cols[0].textContent}\n`;
+        data += `🔢 Quantity: ${cols[1].textContent}\n`;
+        data += `💰 Price: ${cols[2].textContent}\n`;
+        data += `📅 Expiry: ${cols[3].textContent}\n\n`;
+      });
+
+      const blob = new Blob([data], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "MedicineInventory.txt";
+      link.click();
+
+      URL.revokeObjectURL(url);
+    }
   </script>
 
 </body>
