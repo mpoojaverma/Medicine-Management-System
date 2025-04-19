@@ -38,6 +38,7 @@
       width: 100%;
       padding: 10px;
       font-size: 16px;
+      font-style: normal;
       border-radius: 6px;
       border: 1px solid #ccc;
       box-sizing: border-box;
@@ -82,6 +83,21 @@
     th {
       background-color: #edf2f7;
       color: #2d3748;
+    }
+
+    .delete-btn {
+      background-color: #e53e3e;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .delete-btn:hover {
+      background-color: #c53030;
     }
 
     footer {
@@ -149,7 +165,7 @@
         <td>${quantity}</td>
         <td>₹${price}</td>
         <td>${expiry}</td>
-        <td><button onclick="deleteRow(this)">Delete</button></td>
+        <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
       `;
 
       document.getElementById("name").value = "";
