@@ -1,74 +1,119 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Medicine Inventory</title>
+  <title>Medicine Inventory Portal</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    table {
-      width: 70%;
-      border-collapse: collapse;
+
+    .container {
+      background-color: #ffffffcc;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      width: 500px;
     }
-    th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
-      text-align: left;
+
+    h1 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 25px;
     }
-    th {
-      background-color: #e6eef5;
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
     }
+
     input {
-      margin: 5px;
-      padding: 5px;
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
     }
+
     #addBtn {
-      padding: 6px 12px;
-      margin-top: 10px;
-      background-color: #4CAF50;
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
       color: white;
       border: none;
+      border-radius: 5px;
       cursor: pointer;
+      font-size: 16px;
+    }
+
+    #addBtn:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      margin-top: 25px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      color: #333;
     }
   </style>
 </head>
 <body>
 
-  <h1>Medicine Inventory</h1>
+  <div class="container">
+    <h1>Medicine Inventory</h1>
 
-  <label>Medicine Name: <input type="text" id="name" /></label><br>
-  <label>Quantity: <input type="number" id="quantity" /></label><br>
-  <label>Price: <input type="number" step="0.1" id="price" /></label><br>
-  <label>Expiry Date: <input type="date" id="expiry" /></label><br>
-  <button id="addBtn">Add Medicine</button>
+    <label>Medicine Name:
+      <input type="text" id="name" placeholder="Enter medicine name">
+    </label>
 
-  <br><br>
+    <label>Quantity:
+      <input type="number" id="quantity" placeholder="Enter quantity">
+    </label>
 
-  <table id="medicineTable">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Expiry Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Paracetamol</td>
-        <td>100</td>
-        <td>2.5</td>
-        <td>2026-10-30</td>
-      </tr>
-      <tr>
-        <td>Ibuprofen</td>
-        <td>50</td>
-        <td>3.0</td>
-        <td>2025-08-12</td>
-      </tr>
-    </tbody>
-  </table>
+    <label>Price (₹):
+      <input type="number" step="0.01" id="price" placeholder="Enter price per unit">
+    </label>
+
+    <label>Expiry Date:
+      <input type="date" id="expiry">
+    </label>
+
+    <button id="addBtn">Add Medicine</button>
+
+    <table id="medicineTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price (₹)</th>
+          <th>Expiry Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- New rows will be added here -->
+      </tbody>
+    </table>
+  </div>
 
   <script>
     document.getElementById("addBtn").onclick = function () {
@@ -83,7 +128,7 @@
         newRow.innerHTML = `
           <td>${name}</td>
           <td>${quantity}</td>
-          <td>${price}</td>
+          <td>₹${parseFloat(price).toFixed(2)}</td>
           <td>${expiry}</td>
         `;
 
