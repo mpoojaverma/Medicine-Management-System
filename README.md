@@ -27,11 +27,12 @@ To provide a basic system that enables storage and retrieval of medicine data, i
 
 ## 📂 Project Structure
 
-  index.html # Frontend interface
-  medicine.cpp # Core logic (C++ program)
-  README.md # Project documentation
+- index.html # Frontend interface
+- medicine.cpp # Core logic (C++ program)
+- README.md # Project documentation
 
-👤 **Author**
+## 👤 **Author**
+
 **Developed by M. Pooja Verma as a part of learning and practical exploration in C++ and basic web development.**
 
 This project is licensed under the **MIT License**.
